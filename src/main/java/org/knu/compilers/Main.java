@@ -14,8 +14,8 @@ public class Main {
                 "function add(a, b) {\n" +
                 "  return a + b;\n" +
                 "}\n";
-        //Lexer lexer = new Lexer(input);
-        //List<Token> tokens = lexer.lex();
-        //tokens.forEach(System.out::println);
+        Lexer lexer = new Lexer(input);
+        List<Token> tokens = lexer.tokenize();
+        tokens.forEach(System.out::println);
     }
 }
