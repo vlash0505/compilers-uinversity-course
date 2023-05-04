@@ -37,7 +37,15 @@ public class Lexer {
             int startPosition = position;
 
             Token matchedToken = null;
-            StateMachine[] stateMachines = {whitespaceStateMachine, keywordStateMachine, identifierStateMachine, literalStateMachine, commentStateMachine, operatorStateMachine, separatorStateMachine};
+            StateMachine[] stateMachines = {
+                    whitespaceStateMachine,
+                    keywordStateMachine,
+                    identifierStateMachine,
+                    literalStateMachine,
+                    commentStateMachine,
+                    operatorStateMachine,
+                    separatorStateMachine
+            };
 
             for (StateMachine stateMachine : stateMachines) {
                 if (matchedToken == null) {
@@ -61,6 +69,7 @@ public class Lexer {
                 position++;
             }
         }
+        tokens.add(new Token(TokenType.EOF, "", position));
         return tokens;
     }
 }

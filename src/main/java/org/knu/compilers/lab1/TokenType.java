@@ -10,5 +10,6 @@ public enum TokenType {
     SEPARATOR,
     WHITESPACE,
     COMMENT,
-    LEXICAL_ERROR
+    LEXICAL_ERROR,
+    EOF
 }
