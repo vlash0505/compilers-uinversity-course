@@ -9,12 +9,14 @@ public class LiteralStateMachine implements StateMachine {
     }
 
     private State state = State.INITIAL;
+    private char startingQuote;
 
     @Override
     public boolean next(char c) {
         switch (state) {
             case INITIAL -> {
-                if (c == '\"') {
+                if (c == '\"' || c == '\'') {
+                    startingQuote = c;
                     state = State.STRING;
                 } else if (Character.isDigit(c)) {
                     state = State.INTEGER;
@@ -23,10 +25,10 @@ public class LiteralStateMachine implements StateMachine {
                 }
             }
             case STRING -> {
-                if (c == '\"') {
-                    state = State.ACCEPTED;
-                } else if (c == '\\') {
+                if (c == '\\') {
                     state = State.STRING_ESCAPE;
+                } else if (c == startingQuote) {
+                    state = State.ACCEPTED;
                 }
             }
             case STRING_ESCAPE -> state = State.STRING;

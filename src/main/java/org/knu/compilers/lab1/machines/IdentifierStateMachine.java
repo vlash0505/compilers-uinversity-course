@@ -5,21 +5,19 @@ import org.knu.compilers.lab1.TokenType;
 public class IdentifierStateMachine implements StateMachine {
 
     private enum State {
-        START, LETTER, DIGIT_OR_LETTER, ACCEPTED
+        INITIAL, LETTER, DIGIT_OR_LETTER, ACCEPTED
     }
 
     private State currentState;
-    private final StringBuilder buffer = new StringBuilder();
 
     public IdentifierStateMachine() {
-        currentState = State.START;
+        currentState = State.INITIAL;
     }
 
     @Override
     public boolean next(char c) {
-        buffer.append(c);
         switch (currentState) {
-            case START -> {
+            case INITIAL -> {
                 if (Character.isLetter(c) || c == '_') {
                     currentState = State.LETTER;
                     return true;
@@ -49,14 +47,9 @@ public class IdentifierStateMachine implements StateMachine {
         return currentState == State.ACCEPTED || currentState == State.LETTER || currentState == State.DIGIT_OR_LETTER;
     }
 
-    public String getIdentifier() {
-        return buffer.substring(0, buffer.length() - 1);
-    }
-
     @Override
     public void reset() {
-        currentState = State.START;
-        buffer.setLength(0);
+        currentState = State.INITIAL;
     }
 
     @Override

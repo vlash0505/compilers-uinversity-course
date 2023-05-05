@@ -11,7 +11,7 @@ public class KeywordStateMachine implements StateMachine {
             "abstract", "assert", "async",
             "boolean", "break", "byte",
             "case", "catch", "char", "class", "const", "console", "continue",
-            "default", "do", "double",
+            "default", "do", "document", "double",
             "else", "enum", "extends",
             "false", "function", "final", "finally", "float", "for",
             "goto",
@@ -28,26 +28,20 @@ public class KeywordStateMachine implements StateMachine {
 
     private final StringBuilder buffer = new StringBuilder();
     private boolean isAccepted = false;
-    private boolean hasReachedEnd = false;
 
     @Override
     public boolean next(char c) {
-        if (hasReachedEnd) {
-            return false;
-        }
-
         buffer.append(c);
-        String currentOperatorStr = buffer.toString();
+        String currentBuffer = buffer.toString();
 
-        boolean isPrefix = KEYWORDS.stream().anyMatch(op -> op.startsWith(currentOperatorStr));
+        boolean isPrefix = KEYWORDS.stream().anyMatch(op -> op.startsWith(currentBuffer));
 
         if (!isPrefix) {
             buffer.setLength(buffer.length() - 1);
-            hasReachedEnd = true;
             return false;
         }
 
-        isAccepted = KEYWORDS.contains(currentOperatorStr);
+        isAccepted = KEYWORDS.contains(currentBuffer);
         return true;
     }
 
@@ -65,6 +59,5 @@ public class KeywordStateMachine implements StateMachine {
     public void reset() {
         buffer.setLength(0);
         isAccepted = false;
-        hasReachedEnd = false;
     }
 }

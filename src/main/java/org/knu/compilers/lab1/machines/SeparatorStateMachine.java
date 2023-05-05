@@ -9,20 +9,20 @@ import java.util.Set;
 
 public class SeparatorStateMachine implements StateMachine {
     private enum State {
-        START, ACCEPTED
+        INITIAL, ACCEPTED
     }
 
     private State currentState;
-    private static final Set<Character> separatorSet = new HashSet<>(Arrays.asList('(', ')', '{', '}', '[', ']', ';', ',', '.'));
+    private static final Set<Character> SEPARATORS = new HashSet<>(Arrays.asList('(', ')', '{', '}', '[', ']', ';', ',', '.', ':'));
 
     public SeparatorStateMachine() {
-        currentState = State.START;
+        currentState = State.INITIAL;
     }
 
     @Override
     public boolean next(char c) {
-        if (Objects.requireNonNull(currentState) == State.START) {
-            if (separatorSet.contains(c)) {
+        if (Objects.requireNonNull(currentState) == State.INITIAL) {
+            if (SEPARATORS.contains(c)) {
                 currentState = State.ACCEPTED;
                 return true;
             }
@@ -42,6 +42,6 @@ public class SeparatorStateMachine implements StateMachine {
 
     @Override
     public void reset() {
-        currentState = State.START;
+        currentState = State.INITIAL;
     }
 }

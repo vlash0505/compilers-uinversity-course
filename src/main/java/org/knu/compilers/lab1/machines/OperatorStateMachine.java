@@ -5,7 +5,7 @@ import org.knu.compilers.lab1.TokenType;
 public class OperatorStateMachine implements StateMachine {
 
     private enum State {
-        INITIAL, ACCEPTED, PLUS, MINUS, ASTERISK, SLASH, PERCENT, CARET, EQUAL, LESS_THAN, GREATER_THAN, AMPERSAND, PIPE, EXCLAMATION
+        INITIAL, ACCEPTED, PLUS, MINUS, ASTERISK, SLASH, PERCENT, CARET, EQUAL, LESS_THAN, GREATER_THAN, AMPERSAND, QUESTION_MARK, ARROW, DOUBLE_EQUAL, PIPE, EXCLAMATION
     }
 
     private State state = State.INITIAL;
@@ -25,6 +25,7 @@ public class OperatorStateMachine implements StateMachine {
                     case '<' -> state = State.LESS_THAN;
                     case '>' -> state = State.GREATER_THAN;
                     case '&' -> state = State.AMPERSAND;
+                    case '?' -> state = State.QUESTION_MARK ;
                     case '|' -> state = State.PIPE;
                     case '!' -> state = State.EXCLAMATION;
                     default -> {
@@ -32,14 +33,23 @@ public class OperatorStateMachine implements StateMachine {
                     }
                 }
             }
-            case PLUS, MINUS, ASTERISK, SLASH, PERCENT, CARET, EXCLAMATION, EQUAL -> {
+            case EQUAL -> {
+                //covers arrow function case, can be extracted into separate token type if needed
+                if (c == '=') {
+                    state = State.DOUBLE_EQUAL;
+                } else if (c == '>') {
+                    state = State.ARROW;
+                } else {
+                    return false;
+                }
+            }
+            case DOUBLE_EQUAL, ASTERISK, SLASH, PERCENT, CARET, EXCLAMATION, LESS_THAN, GREATER_THAN, AMPERSAND, PIPE, MINUS, PLUS -> {
                 if (c == '=') {
                     state = State.ACCEPTED;
                 } else {
                     return false;
                 }
             }
-            case LESS_THAN, GREATER_THAN, AMPERSAND, PIPE -> state = State.ACCEPTED;
             default -> {
                 return false;
             }
@@ -49,7 +59,7 @@ public class OperatorStateMachine implements StateMachine {
 
     @Override
     public boolean isAccepted() {
-        return state == State.ACCEPTED || state.ordinal() >= State.PLUS.ordinal() && state.ordinal() <= State.EXCLAMATION.ordinal();
+        return state == State.ACCEPTED || state.ordinal() >= State.PLUS.ordinal() && state.ordinal() <= State.PIPE.ordinal();
     }
 
     @Override
@@ -66,3 +76,4 @@ public class OperatorStateMachine implements StateMachine {
         state = State.INITIAL;
     }
 }
+
