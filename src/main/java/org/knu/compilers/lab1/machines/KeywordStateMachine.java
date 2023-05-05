@@ -7,6 +7,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class KeywordStateMachine implements StateMachine {
+    private enum State {
+        INITIAL, PREFIX, ACCEPTED
+    }
+
     private static final Set<String> KEYWORDS = new HashSet<>(Arrays.asList(
             "abstract", "assert", "async",
             "boolean", "break", "byte",
@@ -26,28 +30,40 @@ public class KeywordStateMachine implements StateMachine {
             "while"
     ));
 
+    private State state = State.INITIAL;
     private final StringBuilder buffer = new StringBuilder();
-    private boolean isAccepted = false;
 
     @Override
     public boolean next(char c) {
         buffer.append(c);
         String currentBuffer = buffer.toString();
 
-        boolean isPrefix = KEYWORDS.stream().anyMatch(op -> op.startsWith(currentBuffer));
-
-        if (!isPrefix) {
-            buffer.setLength(buffer.length() - 1);
-            return false;
+        switch (state) {
+            case INITIAL -> {
+                if (isPrefix(currentBuffer)) {
+                    state = State.PREFIX;
+                    return true;
+                }
+            }
+            case PREFIX -> {
+                if (isPrefix(currentBuffer)) {
+                    state = State.PREFIX;
+                    return true;
+                } else if (!Character.isLetter(c) && KEYWORDS.contains(currentBuffer.substring(0, currentBuffer.length() - 1))) {
+                    state = State.ACCEPTED;
+                }
+            }
         }
+        return false;
+    }
 
-        isAccepted = KEYWORDS.contains(currentBuffer);
-        return true;
+    private boolean isPrefix(String prefix) {
+        return KEYWORDS.stream().anyMatch(op -> op.startsWith(prefix));
     }
 
     @Override
     public boolean isAccepted() {
-        return isAccepted;
+        return state == State.ACCEPTED;
     }
 
     @Override
@@ -57,7 +73,7 @@ public class KeywordStateMachine implements StateMachine {
 
     @Override
     public void reset() {
+        state = State.INITIAL;
         buffer.setLength(0);
-        isAccepted = false;
     }
 }
