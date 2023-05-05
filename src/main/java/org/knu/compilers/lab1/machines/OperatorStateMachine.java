@@ -25,7 +25,7 @@ public class OperatorStateMachine implements StateMachine {
                     case '<' -> state = State.LESS_THAN;
                     case '>' -> state = State.GREATER_THAN;
                     case '&' -> state = State.AMPERSAND;
-                    case '?' -> state = State.QUESTION_MARK ;
+                    case '?' -> state = State.QUESTION_MARK;
                     case '|' -> state = State.PIPE;
                     case '!' -> state = State.EXCLAMATION;
                     default -> {

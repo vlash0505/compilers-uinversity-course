@@ -11,8 +11,10 @@ public class Token {
         this.position = position;
     }
 
-    @Override
     public String toString() {
-        return "(" + type + " " + value + " at position " + position + ")";
+        return "Token {\n" +
+                "type = " + type + "\n" +
+                ", value = '" + value + "'\n" +
+                "} at position = " + position + "\n";
     }
 }

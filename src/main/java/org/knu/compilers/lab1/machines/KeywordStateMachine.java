@@ -24,7 +24,7 @@ public class KeywordStateMachine implements StateMachine {
             "null", "native", "new",
             "package", "private", "protected", "public",
             "return",
-            "short", "static", "strictfp", "super", "switch", "synchronized",
+            "short", "static", "strictfp", "super", "switch", "synchronized", "String",
             "true", "this", "throw", "throws", "transient", "try",
             "var", "void", "volatile",
             "while"
