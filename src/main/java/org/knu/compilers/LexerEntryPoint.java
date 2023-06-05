@@ -7,7 +7,7 @@ import java.io.*;
 import java.net.URL;
 import java.util.List;
 
-public class EntryPoint {
+public class LexerEntryPoint {
     public final static String OUTPUT_DIRECTORY = "output";
     public final static String OUTPUT_FILENAME = "tokens.txt";
 
@@ -30,7 +30,7 @@ public class EntryPoint {
     }
 
     private static String readResourceFileToString(String fileName) {
-        InputStream inputStream = EntryPoint.class.getClassLoader().getResourceAsStream(fileName);
+        InputStream inputStream = LexerEntryPoint.class.getClassLoader().getResourceAsStream(fileName);
         if (inputStream == null) {
             throw new IllegalArgumentException("File not found: " + fileName);
         }
@@ -54,7 +54,7 @@ public class EntryPoint {
     }
 
     private static void createOutputFileRelativeToClass(String content) {
-        URL classFileUrl = EntryPoint.class.getResource(EntryPoint.class.getSimpleName() + ".class");
+        URL classFileUrl = LexerEntryPoint.class.getResource(LexerEntryPoint.class.getSimpleName() + ".class");
         if (classFileUrl == null) {
             throw new IllegalArgumentException("Class file not found");
         }
