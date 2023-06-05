@@ -1,8 +1,9 @@
 package org.knu.compilers.lab2;
 
-import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
-import org.knu.compilers.LexerEntryPoint;
 import org.knu.compilers.lab2.gen.JavaScriptLexer;
 import org.knu.compilers.lab2.gen.JavaScriptParser;
 
@@ -17,7 +18,7 @@ public class ParserLabDriver {
         //with accordance to the specified grammar.
 
         String inputFileName = "sample_input.js";
-        InputStream inputStream = LexerEntryPoint.class.getClassLoader().getResourceAsStream(inputFileName);
+        InputStream inputStream = ParserLabDriver.class.getClassLoader().getResourceAsStream(inputFileName);
         if (inputStream == null) {
             throw new IllegalArgumentException("File not found: " + inputFileName);
         }
