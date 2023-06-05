@@ -18,7 +18,7 @@
         <dependency>
             <groupId>org.antlr</groupId>
             <artifactId>antlr4-runtime</artifactId>
-            <version>4.9.3</version>
+            <version>4.12.0</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -48,32 +48,11 @@
             <plugin>
                 <groupId>org.antlr</groupId>
                 <artifactId>antlr4-maven-plugin</artifactId>
-                <version>4.9.3</version>
+                <version>4.12.0</version>
                 <executions>
                     <execution>
                         <goals>
                             <goal>antlr4</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <!-- plugin to create a self-contained portable package
-                 This allows us to execute our application like this:
-                 java -cp target/array-init-1.0-jar-with-dependencies.jar org.abcd.examples.ArrayInit.ArrayInit
-               -->
-            <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>simple-command</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>attached</goal>
                         </goals>
                     </execution>
                 </executions>
