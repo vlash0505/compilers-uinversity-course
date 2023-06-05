@@ -1,7 +1,4 @@
-package org.knu.compilers;
-
-import org.knu.compilers.lab1.Lexer;
-import org.knu.compilers.lab1.Token;
+package org.knu.compilers.lab1;
 
 import java.io.*;
 import java.net.URL;
